@@ -47,7 +47,20 @@ git submodule update --init --recursive
 conda create -n Gaussians4D python=3.7 
 conda activate Gaussians4D
 
+pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 torchaudio==0.13.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
 pip install -r requirements.txt
+conda install -c nvidia/label/cuda-11.7.0 cuda-version=11.7 cuda-toolkit=11.7.0
+
+# 锁定环境变量
+conda env config vars set -n Gaussians4D CUDA_HOME=/opt/miniconda3/envs/Gaussians4D
+conda env config vars list # 查看锁定效果
+
+# 在 Gaussians4D 环境里设置 CUDA_HOME / CC / CXX，视情况
+conda env config vars set -n Gaussians4D \
+    CUDA_HOME=/opt/miniconda3/envs/Gaussians4D \
+    CC=/usr/bin/gcc-11 \
+    CXX=/usr/bin/g++-11
+
 pip install -e submodules/depth-diff-gaussian-rasterization
 pip install -e submodules/simple-knn
 ```
